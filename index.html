@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campagent - מערכת לניהול קבלות וביצועים לקמפיינרים</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">כל הקבלות והביצועים שלך, במקום אחד.</h1>
+                <p class="hero-subtitle">חסוך 70% מהזמן בטיפול בקבלות פייסבוק ובדוחות לקוחות.</p>
+                <div class="hero-buttons">
+                    <button id="facebookAuthBtn" class="btn btn-primary">התחבר עם פייסבוק</button>
+                    <a href="#features" class="btn btn-secondary">גלה איך זה עובד</a>
+                </div>
+                <div id="authMessage" class="auth-message" style="display: none;"></div>
+            </div>
+            <div class="hero-illustration">
+                <div class="dashboard-mockup">
+                    <div class="mockup-card"></div>
+                    <div class="mockup-card"></div>
+                    <div class="mockup-card"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">מה Campagent מציע לך?</h2>
+            <p class="section-subtitle">מערכת לניהול קבלות וביצועים לקמפיינרים – משיכה אוטומטית מחשבונות פייסבוק.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">משיכה אוטומטית של קבלות פייסבוק</h3>
+                    <p class="feature-description">חיבור ישיר לחשבון הפייסבוק שלך למשיכה אוטומטית של כל הקבלות והחשבוניות. אין צורך בהעתקה ידנית או טיפול בקבצים.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 3H21V21H3V3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 9H15V15H9V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3 9H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M9 3V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">דשבורד ביצועים חכם לפי לקוח ופרויקט</h3>
+                    <p class="feature-description">צפה בכל הביצועים והנתונים במקום אחד. סינון לפי לקוח, פרויקט או תקופה – הכל בממשק נוח וברור.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">שליחה אוטומטית במייל לחשבוניות</h3>
+                    <p class="feature-description">שלח חשבוניות ללקוחות שלך אוטומטית במייל. הגדר תבניות מותאמות אישית וחסך זמן יקר.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 8V12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 12H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">גישה ללקוחות לצפייה בלבד</h3>
+                    <p class="feature-description">ספק ללקוחות שלך גישה מאובטחת לדשבורד לצפייה בנתונים וביצועים שלהם בלבד, ללא אפשרות עריכה.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section class="demo">
+        <div class="container">
+            <div class="demo-content">
+                <div class="demo-image">
+                    <div class="dashboard-screenshot">
+                        <div class="screenshot-header">
+                            <div class="screenshot-dot"></div>
+                            <div class="screenshot-dot"></div>
+                            <div class="screenshot-dot"></div>
+                        </div>
+                        <div class="screenshot-body">
+                            <div class="screenshot-sidebar"></div>
+                            <div class="screenshot-main">
+                                <div class="screenshot-chart"></div>
+                                <div class="screenshot-cards">
+                                    <div class="screenshot-card-small"></div>
+                                    <div class="screenshot-card-small"></div>
+                                    <div class="screenshot-card-small"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="demo-text">
+                    <h2 class="demo-title">כך נראה הדשבורד שלך – פשוט, מאורגן, ובשפה שלך.</h2>
+                    <p class="demo-description">ממשק משתמש אינטואיטיבי ונוח, שתוכנן במיוחד עבור קמפיינרים בישראל. כל המידע החשוב נגיש במבט אחד.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <div class="container">
+            <h2 class="section-title">למה לבחור ב-Campagent?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="benefit-title">חיסכון בזמן</h3>
+                    <p class="benefit-description">חסוך עד 70% מהזמן שהיית משקיע בטיפול ידני בקבלות ובדוחות. המערכת עושה את העבודה בשבילך.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="benefit-title">שקיפות ללקוחות</h3>
+                    <p class="benefit-description">ספק ללקוחות שלך גישה ישירה לנתונים וביצועים שלהם. שקיפות מלאה בונה אמון ומקצועיות.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="benefit-title">אוטומציה מלאה</h3>
+                    <p class="benefit-description">משיכת קבלות, יצירת דוחות ושליחת חשבוניות – הכל אוטומטי. אתה רק צריך להתחבר ולהתחיל לעבוד.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>© 2025 Campagent – כל הזכויות שמורות</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">מדיניות פרטיות</a>
+                    <span class="footer-separator">|</span>
+                    <a href="#" class="footer-link">תנאי שימוש</a>
+                    <span class="footer-separator">|</span>
+                    <a href="#" class="footer-link">צור קשר</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
