@@ -1,28 +1,11 @@
-// API base URL - adjust this to match your server
-const API_BASE_URL = 'http://localhost:3001';
-
 // Facebook OAuth handler
 async function initFacebookAuth() {
     const facebookAuthBtn = document.getElementById('facebookAuthBtn');
     const authMessage = document.getElementById('authMessage');
     
     if (facebookAuthBtn) {
-        facebookAuthBtn.addEventListener('click', async function() {
-            try {
-                // Get OAuth URL from backend
-                const response = await fetch(`${API_BASE_URL}/api/auth/facebook?userId=user_${Date.now()}`);
-                const data = await response.json();
-                
-                if (data.authUrl) {
-                    // Redirect to Facebook OAuth
-                    window.location.href = data.authUrl;
-                } else {
-                    showMessage('חיבור לפייסבוק נכשל. נסה שוב.', 'error');
-                }
-            } catch (error) {
-                console.error('Facebook auth error:', error);
-                showMessage('חיבור לפייסבוק נכשל. נסה שוב.', 'error');
-            }
+        facebookAuthBtn.addEventListener('click', function() {
+            window.location.href = 'https://campagent.vercel.app/auth/facebook/callback';
         });
     }
     
