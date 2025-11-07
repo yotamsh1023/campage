@@ -1,3 +1,7 @@
+const SUPABASE_PROJECT_URL = 'https://ticvfvasxokumficxzal.supabase.co';
+const SUPABASE_CALLBACK_PROD = 'https://campagent.vercel.app/auth/callback';
+const SUPABASE_CALLBACK_LOCAL = 'http://localhost:3000/auth/callback';
+
 // Facebook OAuth handler
 async function initFacebookAuth() {
     const facebookAuthBtn = document.getElementById('facebookAuthBtn');
@@ -5,11 +9,29 @@ async function initFacebookAuth() {
     
     if (facebookAuthBtn) {
         facebookAuthBtn.addEventListener('click', function() {
-            window.location.href = 'https://ticvfvasxokumficxzal.supabase.co/auth/v1/callback';
+            const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            const redirectUrl = isLocalhost ? SUPABASE_CALLBACK_LOCAL : SUPABASE_CALLBACK_PROD;
+            const supabaseAuthUrl = `${SUPABASE_PROJECT_URL}/auth/v1/authorize?provider=facebook&redirect_to=${encodeURIComponent(redirectUrl)}`;
+            window.location.href = supabaseAuthUrl;
         });
     }
     
-    // Check for success/error messages in URL parameters
+    // Check for success/error messages stored by the callback handler
+    const storedStatus = sessionStorage.getItem('campagentAuthStatus');
+    if (storedStatus) {
+        try {
+            const { status, message } = JSON.parse(storedStatus);
+            if (status && message) {
+                showMessage(message, status);
+            }
+        } catch (error) {
+            console.error('Failed to parse stored auth status', error);
+        } finally {
+            sessionStorage.removeItem('campagentAuthStatus');
+        }
+    }
+    
+    // Check for success/error messages in URL parameters (legacy flow)
     const urlParams = new URLSearchParams(window.location.search);
     const success = urlParams.get('success');
     const error = urlParams.get('error');
