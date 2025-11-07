@@ -32,6 +32,7 @@ PORT=3001
 4. In Settings → Basic, copy your App ID and App Secret
 5. In Settings → Facebook Login → Settings, add redirect URI:
    - `http://localhost:3001/auth/facebook/callback` (for development)
+   - `https://ticvfvasxokumficxzal.supabase.co/auth/v1/callback` (Supabase production)
 6. In App Review, request permissions:
    - `ads_read`
    - `business_management`
@@ -55,12 +56,10 @@ npm run dev
 ## How It Works
 
 1. User clicks "התחבר עם פייסבוק" button
-2. Frontend requests OAuth URL from backend (`/api/auth/facebook`)
-3. User is redirected to Facebook login
-4. After authorization, Facebook redirects to `/auth/facebook/callback`
-5. Backend exchanges code for access token
-6. Token is saved to SQLite database
-7. User is redirected back with success/error message
+2. Frontend redirects directly to the configured Facebook OAuth callback (`https://ticvfvasxokumficxzal.supabase.co/auth/v1/callback` in production)
+3. Supabase handles the Facebook login flow and processes the OAuth callback
+4. After authorization, Supabase receives the code from Facebook and stores the session/token
+5. Your Supabase auth hooks can then notify the frontend of success or failure
 
 ## Files Modified
 

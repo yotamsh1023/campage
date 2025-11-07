@@ -5,7 +5,7 @@ async function initFacebookAuth() {
     
     if (facebookAuthBtn) {
         facebookAuthBtn.addEventListener('click', function() {
-            window.location.href = 'https://campagent.vercel.app/auth/facebook/callback';
+            window.location.href = 'https://ticvfvasxokumficxzal.supabase.co/auth/v1/callback';
         });
     }
     

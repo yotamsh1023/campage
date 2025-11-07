@@ -17,7 +17,7 @@ http://localhost:3001/auth/facebook/callback
 
 For production, also add:
 ```
-https://yourdomain.com/auth/facebook/callback
+https://ticvfvasxokumficxzal.supabase.co/auth/v1/callback
 ```
 
 ### 2. Request Required Permissions
@@ -57,15 +57,16 @@ To make it available to all users, you'll need to submit for App Review.
    ```
 
 3. **Test the integration**:
-   - Open `index.html` in your browser
+   - Open `index.html` (or your deployed site) in your browser
    - Click "התחבר עם פייסבוק"
-   - Complete the OAuth flow
+   - Complete the OAuth flow via Supabase
    - You should see: "החיבור לפייסבוק בוצע בהצלחה!"
 
 ## Troubleshooting
 
 ### "Invalid OAuth Redirect URI"
-- Make sure the redirect URI in Facebook App Settings matches exactly: `http://localhost:3001/auth/facebook/callback`
+- Make sure the redirect URI in Facebook App Settings matches exactly: `https://ticvfvasxokumficxzal.supabase.co/auth/v1/callback`
+- Keep `http://localhost:3001/auth/facebook/callback` for local development
 - Check for trailing slashes or typos
 
 ### "Invalid App ID or App Secret"
@@ -77,8 +78,8 @@ To make it available to all users, you'll need to submit for App Review.
 - For development, you can test with your own account first
 
 ### CORS Errors
-- Make sure the server is running on port 3001
-- Check that `API_BASE_URL` in `script.js` matches your server URL
+- When using Supabase, ensure the site you're testing from is listed as an authorized domain in Supabase Auth settings
+- If you still run the local Express server, verify it's available on port 3001
 
 ## Security Reminders
 
