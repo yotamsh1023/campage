@@ -1,21 +1,54 @@
-const SUPABASE_PROJECT_URL = 'https://ticvfvasxokumficxzal.supabase.co';
-const SUPABASE_CALLBACK_PROD = 'https://campagent.vercel.app/auth/callback';
-const SUPABASE_CALLBACK_LOCAL = 'http://localhost:3000/auth/callback';
+const SUPABASE_URL = 'https://ticvfvasxokumficxzal.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpY3ZmdmFzeG9rdW1maWN4emFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIzNjgyNjAsImV4cCI6MjA3Nzk0NDI2MH0.3ydRtCPv4XAxrxBBOYhA8k2sj8l5kPi5_FRi9ox7QEY';
+
+let supabaseClient = null;
+
+function initSupabaseClient() {
+    if (supabaseClient) {
+        return supabaseClient;
+    }
+
+    if (typeof supabase === 'undefined') {
+        console.error('Supabase SDK not loaded.');
+        return null;
+    }
+
+    supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    return supabaseClient;
+}
 
 // Facebook OAuth handler
 async function initFacebookAuth() {
     const facebookAuthBtn = document.getElementById('facebookAuthBtn');
     const authMessage = document.getElementById('authMessage');
-    
+    const client = initSupabaseClient();
+
     if (facebookAuthBtn) {
-        facebookAuthBtn.addEventListener('click', function() {
-            const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-            const redirectUrl = isLocalhost ? SUPABASE_CALLBACK_LOCAL : SUPABASE_CALLBACK_PROD;
-            const supabaseAuthUrl = `${SUPABASE_PROJECT_URL}/auth/v1/authorize?provider=facebook&redirect_to=${encodeURIComponent(redirectUrl)}`;
-            window.location.href = supabaseAuthUrl;
+        facebookAuthBtn.addEventListener('click', async function () {
+            if (!client) {
+                showMessage('חיבור לפייסבוק נכשל. חסר מפתח Supabase.', 'error');
+                return;
+            }
+
+            const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+            const redirectTo = isLocalhost ? 'http://localhost:3000/auth/callback' : 'https://campagent.vercel.app/auth/callback';
+
+            showMessage('מעביר אותך להתחברות לפייסבוק...', 'success');
+
+            const { error } = await client.auth.signInWithOAuth({
+                provider: 'facebook',
+                options: {
+                    redirectTo
+                }
+            });
+
+            if (error) {
+                console.error('Facebook OAuth error:', error);
+                showMessage('חיבור לפייסבוק נכשל. נסה שוב.', 'error');
+            }
         });
     }
-    
+
     // Check for success/error messages stored by the callback handler
     const storedStatus = sessionStorage.getItem('campagentAuthStatus');
     if (storedStatus) {
@@ -30,13 +63,13 @@ async function initFacebookAuth() {
             sessionStorage.removeItem('campagentAuthStatus');
         }
     }
-    
+
     // Check for success/error messages in URL parameters (legacy flow)
     const urlParams = new URLSearchParams(window.location.search);
     const success = urlParams.get('success');
     const error = urlParams.get('error');
     const message = urlParams.get('message');
-    
+
     if (success === 'true' && message) {
         showMessage(decodeURIComponent(message), 'success');
         // Clean URL

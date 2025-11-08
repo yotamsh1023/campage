@@ -13,6 +13,7 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+            margin: 0;
         }
         .status-card {
             background: #FFFFFF;
@@ -51,29 +52,47 @@
         <p>אנחנו משלימים את תהליך ההתחברות שלך לפייסבוק. זה ייקח כמה שניות.</p>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         (function () {
+            const SUPABASE_URL = 'https://ticvfvasxokumficxzal.supabase.co';
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpY3ZmdmFzeG9rdW1maWN4emFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIzNjgyNjAsImV4cCI6MjA3Nzk0NDI2MH0.3ydRtCPv4XAxrxBBOYhA8k2sj8l5kPi5_FRi9ox7QEY';
+            let messageStatus = { status: 'success', message: 'החיבור לפייסבוק בוצע בהצלחה!' };
+
             const hashParams = new URLSearchParams(window.location.hash.slice(1));
             const queryParams = new URLSearchParams(window.location.search);
 
             const error = hashParams.get('error') || queryParams.get('error');
             const accessToken = hashParams.get('access_token');
-            const messageSuccess = 'החיבור לפייסבוק בוצע בהצלחה!';
-            const messageError = 'חיבור לפייסבוק נכשל. נסה שוב.';
+            const refreshToken = hashParams.get('refresh_token');
+            const providerToken = hashParams.get('provider_token');
+            const type = hashParams.get('type');
 
-            if (error) {
-                sessionStorage.setItem('campagentAuthStatus', JSON.stringify({
-                    status: 'error',
-                    message: messageError
-                }));
-            } else if (accessToken) {
-                sessionStorage.setItem('campagentAuthStatus', JSON.stringify({
-                    status: 'success',
-                    message: messageSuccess
-                }));
+            if (!window.supabase || !SUPABASE_ANON_KEY || SUPABASE_ANON_KEY === 'REPLACE_WITH_SUPABASE_PUBLIC_ANON_KEY') {
+                console.warn('Supabase SDK or anon key not configured.');
+            } else {
+                const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+                if (accessToken && (refreshToken || providerToken)) {
+                    supabaseClient.auth.setSession({
+                        access_token: accessToken,
+                        refresh_token: refreshToken || providerToken
+                    }).catch((err) => {
+                        console.error('Failed to set Supabase session:', err);
+                    });
+                }
+
+                if (type === 'recovery') {
+                    messageStatus = { status: 'success', message: 'הגדרות האיפוס עודכנו בהצלחה.' };
+                }
             }
 
-            // Redirect back to the main page without exposing tokens in the URL
+            if (error) {
+                messageStatus = { status: 'error', message: 'חיבור לפייסבוק נכשל. נסה שוב.' };
+            }
+
+            sessionStorage.setItem('campagentAuthStatus', JSON.stringify(messageStatus));
+
             setTimeout(() => {
                 const basePath = window.location.origin && window.location.origin !== 'null'
                     ? window.location.origin + '/'
